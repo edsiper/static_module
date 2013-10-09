@@ -6,7 +6,6 @@
 
 struct module_info {
   char *name;
-  //char *src;
   int (*func) (int, int);
 } __attribute__((packed));
 

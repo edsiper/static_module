@@ -9,7 +9,7 @@ static void mod_all()
   struct module_info *iter_stop = (struct module_info *) &__stop_modules;
 
   for (; iter < iter_stop; ++iter) {
-    printf("Module name: '%s' funct()=%i\n",
+    printf("Module name: '%s' func()=%i\n",
            iter->name,
            iter->func(1, 1));
   }
