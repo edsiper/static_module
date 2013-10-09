@@ -1,24 +1,23 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 #ifndef __MODULE_H__
 #define __MODULE_H__
 
-typedef int (*finit_t) (int, int);
-
-struct plugin {
+struct module_info {
   char *name;
-  finit_t f;
-};
+  //char *src;
+  int (*func) (int, int);
+} __attribute__((packed));
 
-extern struct module __start_my_plugins;
-extern struct module __stop_my_plugins;
+#define module_t struct module_info               \
+  __attribute((__section__("modules")))           \
+  __attribute((__used__))
 
-#define REGISTER_MODULE(mod)                            \
-  static struct plugin __dmp_ ## mod                    \
-  __attribute((__section__("my_plugins")))              \
-       __attribute((__used__)) = {                      \
-    .name = #mod                                        \
-    .f    = mod.f                                       \
-  }
+extern struct module_info __start_modules;
+extern struct module_info __stop_modules;
 
-#endif /* __SECTION_HACKING_H__ */
+int func_sum(int a, int b);
+int func_mult(int a, int b);
+
+#endif
